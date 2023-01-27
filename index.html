@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <script type="module" src="/src/index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Making Music with ToneJS</title>
+  </head>
+<body>
+<nav>
+  <h1>Making Music with ToneJS</h1>
+  <div>
+  <a href="/" aria-current="page">Part 1</a>
+  <a href="/page2.html">Part 2</a>
+  </div>
+</nav>
+<h1>ToneJS</h1>
+<h2>What is it?</h2>
+<p>
+  Tone.js is a Web Audio framework for creating interactive music in the browser. The architecture of Tone.js aims to be familiar to both musicians and audio programmers creating web-based audio applications. 
+</p>
+<h2>Building a Synthesizer</h2>
+<h3>What is a Synthesizer</h3>
+<p>
+  A synthesizer generates tones by generating an electrical signal that moves between high and low voltages in various patterns, and at different speeds. These signals can be sent to control various parameters of the sound output.
+</p>
+<h3>Oscillators</h3>
+<p>
+  As the name implies, the <strong>oscillator</strong> creates a repetitive, oscillating wave between high point and a low point. This is what will create sound from our computer audio output.(speakers, headphones)
+</p>
+<p>
+  By setting these points to be electric voltages and changing the pattern of how the computer moves from high-low-high, and how quickly this pattern occurs, the synthesizer is able to create its variety of timbres and pitches. These patterns are called <strong>waveforms</strong>.
+</p>
+
+<h3>
+Types of Oscillators
+</h3>
+<p>
+  The most basic unit of synthesis in Tone is Tone.Oscillator. There are 4 different kinds of waveforms, which describe how a signal travels from point to point.
+  Click these to hear. (<strong>warning - reduce your volume before clicking!</strong>)
+  <ul>
+    Click these to hear. (warning - reduce your volume before clicking!)
+    <li id="sine-oscillator">Sine</li> 
+    <li id="triangle-oscillator">Triangle</li>
+    <li id="sawtooth-oscillator">Sawtooth</li>
+    <li id="square-oscillator">Square</li>
+  </ul>
+  <img width="400px" 
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Waveforms.svg/525px-Waveforms.svg.png" 
+      alt="Charts showing a representation of sine, square, triangle, and sawtooth waveforms" />
+</p>
+<h3>
+  Envelopes
+</h3>
+<p>
+  Envelopes control how sounds change over time. They may control parameters such as amplitude (volume), filters (frequencies), or pitch. The most common envelope is the <strong>ADSR</strong> (attack, decay, sustain, release) envelope.
+</p>
+<p>
+  <ul>
+  <li><strong>Attack</strong> is the time taken for initial run-up of level from nil to peak, beginning when the note is triggered.</li>
+<li><strong>Decay</strong> is the time taken for the subsequent run down from the attack level to the designated sustain level.</li>
+<li><strong>Sustain</strong> is the level during the main sequence of the sound's duration, until the key is released.</li>
+<li><strong>Release</strong> is the time taken for the level to decay from the sustain level to zero after the key is released.</li>
+  </ul>
+  <img width="400px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/ADSR_parameter.svg/1920px-ADSR_parameter.svg.png" 
+  alt="Line-graph of how the four parameters A, D, S and R change the shape of an ADSR envelope."/>
+</p>
+<h3>
+  ToneJS's Synth Class 
+</h3>
+<p>
+  The Synth essentially allows us to combine our oscillator through our envelope.  (Note: There is plenty more to this, but for our purposes, that definition will do.)
+</p>
+<h4>
+  Initialising a new synth
+</h4>
+<pre>
+  <code>
+    const synth = new Tone.Synth().toDestination(); //here to destination refers to the system output.
+  </code>
+</pre>
+<h4>
+  Using the synth object:
+</h4>
+<pre>
+<code>
+  /*
+  the object has a triggerAttackRelease method and we've given it two arguments - the frequency and the duration.  We've passed these in musical notation.  
+  */
+
+  synth.triggerAttackRelease("C4", "8n");
+  
+</code>
+<button id="run-example-synth">Run</button>
+</pre>
+
+<hr>
+(from <a href="https://css-tricks.com/how-to-code-a-playable-synth-keyboard/">Bret Cameron's CSS-Tricks article</a>)
+<label class="switch">
+  <input type="checkbox" id="piano-toggle">
+  <span class="slider"></span>
+</label>
+<ul id="keyboard">
+  <li note="C" class="white">A</li>
+  <li note="C#" class="black">W</li>
+  <li note="D" class="white offset">S</li>
+  <li note="D#" class="black">E</li>
+  <li note="E" class="white offset">D</li>
+  <li note="F" class="white">F</li>
+  <li note="F#" class="black">T</li>
+  <li note="G" class="white offset">G</li>
+  <li note="G#" class="black">Y</li>
+  <li note="A" class="white offset">H</li>
+  <li note="A#" class="black">U</li>
+  <li note="B" class="white offset">J</li>
+  <li note="C2" class="white">K</li>
+  <li note="C#2" class="black">O</li>
+  <li note="D2" class="white offset">L</li>
+  <li note="D#2" class="black">P</li>
+  <li note="E2" class="white offset">;</li>
+</ul>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <nav>
+      <h1>Making Music with ToneJS</h1>
+      <div>
+        <a href="/">Part 1</a>
+        <a href="/page2.html" aria-current="page">Part 2</a>
+      </div>
+    </nav>
+    <h1>ToneJS</h1>
+    <p>How do I add a pause / rests between notes in a Pattern?</p>
+
+    <p>
+      You can pass a 'time' value to `triggerAttackRelease` which will delay the
+      note, but it does not push subsequent notes along the timeline - meaing
+      that they clash / crash.
+    </p>
+
+    <hr />
+
+    <p>Notes to play: <strong>A3, C4, E4, G4</strong></p>
+
+    <h2>Example 1</h2>
+    <p>
+      No delay, and no clash and no problems.
+      <button id="play-button">Play</button>
+      <button id="stop-button">Stop</button>
+    </p>
+
+    <h2>Example 2</h2>
+    <p>
+      With a delay on the 2nd note (C4), the pattern crashes
+      <button id="play-button2">Play</button>
+      <button id="stop-button2">Stop</button>
+    </p>
+
+    <h3>Note</h3>
+    <p>After the crash, you may need to refresh the page to fix the audio</p>
+
+    <h3>What I'm hoping to achieve</h3>
+    <p>
+      I want to inset a space / delay before the note 'C' and everthing else
+      will move along accordingly
+    </p>
+    <pre>
+  <code>
+   [1---][2---][3---][4---]
+   [A---][----][C---][E---]
+  </code>
+</pre>
+
+    <h3>But what happens is...</h3>
+    <p>
+      The other notes are still on the same schedule, meaning the delay only
+      affects one note and will clash / crash with the others
+    </p>
+    <pre>
+  <code>
+   [1---][2---][3---][4---]
+   [A---][----][C---]
+   [----][----][E---][G---]
+  </code>
+</pre>
+  </body>
+</html>
