@@ -74,7 +74,8 @@ const playExampleSynth = async () => {
 
 runExampleSynth.addEventListener('click', playExampleSynth);
 
-let synthForPiano = new Tone.PolySynth()
+let synthForPiano = new Tone.PolySynth().set({envelope:{release: "2"}})
+
 pianoToggle.addEventListener('click', async (e) => {
   if (e.target.checked) return synthForPiano.toDestination()
   synthForPiano.releaseAll()
@@ -112,10 +113,10 @@ async function playPianoNote(e) {
   const eventKey = e.key.toUpperCase()
   const key = eventKey === ";" ? "semicolon" : eventKey
   console.log(key)
-  if (!key || !keys[key]) {
+  if (!key || !keys[key] ||pressedNotes.has(key)) {
     return;
   }
-
+  pressedNotes.set(key)
   keys[key].element.classList.add("pressed");
   
   let note =keys[key].note
@@ -132,9 +133,11 @@ async function stopPianoNote(e) {
     return;
   }
   keys[key].element.classList.remove("pressed");
+  pressedNotes.delete(key)
   let note =keys[key].note
   let octave = keys[key].octaveOffset + 3
   synthForPiano.triggerRelease(note+octave)
+  
 }
 
 function lostWindowFocus () {
