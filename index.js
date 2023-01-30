@@ -16,39 +16,42 @@ const squareOscillatorElement = document.getElementById('square-oscillator');
 const runExampleSynth = document.getElementById('run-example-synth');
 
 const pianoToggle = document.getElementById('piano-toggle')
+const melody1 = document.getElementById('melody-1')
+const melody1stop = document.getElementById('melody-1-stop')
 
 //create a synth and connect it to the main output (your speakers)
-// const synth = new Tone.Synth().toDestination();
+const synth = new Tone.Synth().toDestination();
 
 // =======================
 // EXAMPLE 1
 
-// const notesForSequence1 = ["C3", "G3", "G3", ["F3", "E3"], ["F3", "E3"], "D3", null]
-// const sequence = new Tone.Sequence((time, note,) => {
-//   synth.triggerAttackRelease(note, "2n", time)
-// }, notesForSequence1, "2n")
-// sequence.loop = false
+const notesForSequence1 = ["C3", "G3", "G3", ["F3", "E3"], ["F3", "E3"], "D3", null]
+const secondMelody = ["E3", "D3", "C3", "D3", "E3", "E3", "E3"]
+const sequence = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, "2n", time)
+}, secondMelody, "2n")
+sequence.loop = false
 
-// const pattern = new Tone.Pattern(
-//   (time, { note, duration, delay, velocity }) => {
-//     // the order of the notes passed in depends on the pattern
-//     synth.triggerAttackRelease(note, duration, time + delay, velocity);
-//   },
-//   arrayOfNotesWithoutDelays,
-//   'up'
-// );
+const pattern = new Tone.Pattern(
+  (time, { note, duration, delay, velocity }) => {
+    // the order of the notes passed in depends on the pattern
+    synth.triggerAttackRelease(note, duration, time + delay, velocity);
+  },
+  notesForSequence1,
+  'up'
+);
 
-// playButton.addEventListener('click', async () => {
-//   console.log('clicked!')
-//   await Tone.start()
-//   sequence.start()
-//   Tone.Transport.start();
-// });
+melody1.addEventListener('click', async () => {
+  console.log('clicked!')
+  await Tone.start()
+  sequence.start()
+  Tone.Transport.start();
+});
 
-// stopButton.addEventListener('click', () => {
-//   Tone.Transport.stop();
+melody1stop.addEventListener('click', () => {
+  Tone.Transport.stop();
 
-// });
+});
 
 const playOscillator = async (e) => {
   await Tone.start();
@@ -75,6 +78,7 @@ const playExampleSynth = async () => {
 runExampleSynth.addEventListener('click', playExampleSynth);
 
 let synthForPiano = new Tone.PolySynth()
+
 pianoToggle.addEventListener('click', async (e) => {
   if (e.target.checked) return synthForPiano.toDestination()
   synthForPiano.releaseAll()
@@ -106,18 +110,18 @@ const keys = {
 const pressedNotes = new Map();
 let clickedKey = "";
 
-async function playPianoNote(e) {
+function playPianoNote(e) {
   console.log(e.key)
   if (e.repeat || !pianoToggle.checked) return
   const eventKey = e.key.toUpperCase()
   const key = eventKey === ";" ? "semicolon" : eventKey
-  console.log(key)
-  if (!key || !keys[key]) {
+  console.log("pressed: ", pressedNotes)
+  if (!key || !keys[key] || pressedNotes.has(key)) {
     return;
   }
 
   keys[key].element.classList.add("pressed");
-  
+  pressedNotes.set(key)
   let note =keys[key].note
   let octave = keys[key].octaveOffset + 3
   
@@ -125,13 +129,14 @@ async function playPianoNote(e) {
   synthForPiano.triggerAttack(note+octave)
 }
 
-async function stopPianoNote(e) {
+function stopPianoNote(e) {
   const eventKey = e.key.toUpperCase()
   const key = eventKey === ";" ? "semicolon" : eventKey
   if (!key || !keys[key]) {
     return;
   }
   keys[key].element.classList.remove("pressed");
+  pressedNotes.delete(key)
   let note =keys[key].note
   let octave = keys[key].octaveOffset + 3
   synthForPiano.triggerRelease(note+octave)

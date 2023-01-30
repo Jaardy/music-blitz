@@ -12,11 +12,12 @@
 <nav>
   <h1>Making Music with ToneJS</h1>
   <div>
-  <a href="/" aria-current="page">Part 1</a>
-  <a href="/page2.html">Part 2</a>
+  <a href="#intro-secton" aria-current="page">Intro</a>
+  <a href="#melody-section">Building a Melody</a>
   </div>
 </nav>
-<h1>ToneJS</h1>
+<section id="intro-section">
+<h1>Intro</h1>
 <h2>What is it?</h2>
 <p>
   Tone.js is a Web Audio framework for creating interactive music in the browser. The architecture of Tone.js aims to be familiar to both musicians and audio programmers creating web-based audio applications. 
@@ -42,10 +43,10 @@ Types of Oscillators
   Click these to hear. (<strong>warning - reduce your volume before clicking!</strong>)
   <ul>
     Click these to hear. (warning - reduce your volume before clicking!)
-    <li id="sine-oscillator">Sine</li> 
-    <li id="triangle-oscillator">Triangle</li>
-    <li id="sawtooth-oscillator">Sawtooth</li>
-    <li id="square-oscillator">Square</li>
+    <li><button id="sine-oscillator">Sine</button></li> 
+    <li><button id="triangle-oscillator">Triangle</button></li>
+    <li ><button id="sawtooth-oscillator">Sawtooth</button></li>
+    <li ><button id="square-oscillator">Square</button></li>
   </ul>
   <img width="400px" 
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Waveforms.svg/525px-Waveforms.svg.png" 
@@ -121,3 +122,14 @@ Types of Oscillators
   <li note="D#2" class="black">P</li>
   <li note="E2" class="white offset">;</li>
 </ul>
+
+</section>
+<section id="melody-section">
+  <h1>
+    Building a Melody
+  </h1>
+  <div>
+  <button id="melody-1">Melody 1</button>
+  <button id="melody-1-stop">Stop</button>
+  </div>
+</section>
