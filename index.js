@@ -26,24 +26,17 @@ const synth = new Tone.Synth().toDestination();
 // EXAMPLE 1
 
 const notesForSequence1 = ["C3", "G3", "G3", ["F3", "E3"], ["F3", "E3"], "D3", null]
-const secondMelody = ["E3", "D3", "C3", "D3", "E3", "E3", "E3"]
-const sequence = new Tone.Sequence((time, note) => {
-  synth.triggerAttackRelease(note, "2n", time)
-}, secondMelody, "2n")
+const secondMelody = [["G3", "A3", "C4", "A3"], "E4", "E4", "D4", ["G3", "A3", "C4", "A3"], ["D4"], ["D4", null], "C4"]
+const sequence = new Tone.Sequence((time, note,) => {
+  synth.triggerAttackRelease(note, "4n", time)
+}, secondMelody, "4n")
 sequence.loop = false
 
-const pattern = new Tone.Pattern(
-  (time, { note, duration, delay, velocity }) => {
-    // the order of the notes passed in depends on the pattern
-    synth.triggerAttackRelease(note, duration, time + delay, velocity);
-  },
-  notesForSequence1,
-  'up'
-);
 
 melody1.addEventListener('click', async () => {
   console.log('clicked!')
   await Tone.start()
+  Tone.Transport.bpm.value = 120
   sequence.start()
   Tone.Transport.start();
 });
