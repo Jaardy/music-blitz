@@ -3,7 +3,7 @@ import './style.css';
 import * as Tone from 'tone';
 
 // get buttons
-// const playButton = document.getElementById('play-button');
+const playButton = document.getElementById('play-melody-1');
 // const stopButton = document.getElementById('stop-button');
 const sineOscillatorElement = document.getElementById('sine-oscillator');
 const triangleOscillatorElement = document.getElementById(
@@ -18,16 +18,33 @@ const runExampleSynth = document.getElementById('run-example-synth');
 const pianoToggle = document.getElementById('piano-toggle')
 
 //create a synth and connect it to the main output (your speakers)
-// const synth = new Tone.Synth().toDestination();
+const synth = new Tone.Synth().toDestination();
 
 // =======================
 // EXAMPLE 1
 
-// const notesForSequence1 = ["C3", "G3", "G3", ["F3", "E3"], ["F3", "E3"], "D3", null]
-// const sequence = new Tone.Sequence((time, note,) => {
-//   synth.triggerAttackRelease(note, "2n", time)
-// }, notesForSequence1, "2n")
-// sequence.loop = false
+
+const melody1  = ["C3", "G3", "G3", ["F3", "E3"], ["F3", "E3"], "D3", null]
+const melody2 = [["G3", "A3", "C4", "A3"], "E4", "E4", "D4", null, ["G3", "A3", "C4", "A3"], "D4", "D4", "C4", null]
+const melody3 =  [["A2","G2"], "E2",null,  "E2", null, "E2", null, null,[null, "e2"], "e2", "e2", "g2", "e2", "a2"]
+const melody4 = ["a3", null, "f4", null, "F4", null,
+null, null, null, null, "d4", "d4", "d4", "G3", "d4",
+"d4","d4","d4","d4","d4", "G3", "d4", "G3", "d4", "G3", "d4", null,
+"F4", "G4", "b4", "a4", null, "F4", "d4", "b4",
+"G4", "G4", "G4", "a4", null, null, "G4", "G4", "G4", "a4",
+"c5", null, "C5", "b3", "b3", "g3", "b3","b3","b3", "C4", "b3",
+"b3", "g3", "b3", "b3", "b3", "F4", null, "A4", null,
+null, null, "c5", "D5", "C5", null,
+"A4", "F4", "c4", null, null, null, "e5",
+"D4", "D4", "a3", "D4", "D4", "D4", "e4", "D4", "D4", "a3", "D4", "a3",
+"D4", "a3", "A4", null, "g4", "D4", "c5", "a4", "a4", "a4",
+"A4", "a4", "a4", "A4", "a4", "a4", "a4", "A4", "C5", null,
+"D5", "D5", "D5", "D5", null, null, "C4", "D4", "f4", "G4",
+"F4", null, "f4", "D4", "C4", "C4", null, null ]
+const sequence = new Tone.Sequence((time, note,) => {
+  synth.triggerAttackRelease(note, "8n", time)
+}, melody3, "8n")
+sequence.loop = false
 
 // const pattern = new Tone.Pattern(
 //   (time, { note, duration, delay, velocity }) => {
@@ -38,12 +55,14 @@ const pianoToggle = document.getElementById('piano-toggle')
 //   'up'
 // );
 
-// playButton.addEventListener('click', async () => {
-//   console.log('clicked!')
-//   await Tone.start()
-//   sequence.start()
-//   Tone.Transport.start();
-// });
+playButton.addEventListener('click', async () => {
+  
+  await Tone.start()
+  Tone.Transport.stop();
+  Tone.Transport.start();
+  sequence.start()
+  
+});
 
 // stopButton.addEventListener('click', () => {
 //   Tone.Transport.stop();
